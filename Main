@@ -1,0 +1,170 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+public class Main {
+    public static void main(String[] args) {
+        ArrayList<Building> buildings = new ArrayList<>();
+        Scanner input = new Scanner(System.in);
+        int choice=-1;
+        do {
+            System.out.println("1: Add a building");
+            System.out.println("2: Remove a building");
+            System.out.println("3: List all the buildings");
+            System.out.println("4: List all tenants");
+            System.out.println("5: Add tenant");
+            System.out.println("6: Remove tenant");
+            System.out.println("7: Update tenant");
+            System.out.println("8: Charge Rent");
+            System.out.println("9: Pay for service");
+            System.out.println("0: Exit");
+            System.out.println("Select option: ");
+            choice = input.nextInt();
+            switch (choice) {
+                case 1:
+                    System.out.println("Enter the number of apartments in the building: ");
+                    int size = input.nextInt();
+                    Building build = new Building(size);
+                    buildings.add(build);
+                    break;
+                case 2:
+                    System.out.println("Enter the building id: ");
+                    int id = input.nextInt();
+                    if (id<0 || id>buildings.size()) {
+                        System.out.println("Invalid building id");
+                    }
+                    else {
+                        buildings.remove(id);
+                    }
+
+                    break;
+                case 3:
+                    int bn=0;
+                    for (Building b:buildings) {
+
+                        int population=b.countTenants();
+                        System.out.println("Building "+bn+": "+population+" tenants");
+                        bn++;
+                    }
+                    break;
+                case 4:
+                    System.out.println("Enter the building id: ");
+                    int buildingId = input.nextInt();
+                    if (buildingId<0 || buildingId>buildings.size()) {
+                        System.out.println("Invalid building id");
+                    }
+                    else {
+                        buildings.get(buildingId).listTenants();
+                    }
+                    break;
+                case 5:
+                    System.out.println("Enter the building id: ");
+                    int bId = input.nextInt();
+                    if (bId<0 || bId>buildings.size()) {
+                        System.out.println("Invalid building id");
+                    }
+                    else {
+                        Building ourBuilding=buildings.get(bId);
+                        ourBuilding.listTenants();
+                        input.nextLine();
+                        System.out.println("Enter the tenants name: ");
+                        String name = input.nextLine();
+                        System.out.println("Enter the tenants age: ");
+                        int age = input.nextInt();
+                        System.out.println("Enter the tenants rent: ");
+                        int rent = input.nextInt();
+                        Tenant newDude=new Tenant(name,age,rent);
+                        System.out.println(" the apartment number for the new Tenant");
+                        int aptNum=input.nextInt();
+                        if(ourBuilding.addTenant(newDude,aptNum)){
+                            System.out.println("Tenant added");
+                        }
+                        else {
+                            System.out.println("Tenant not added");
+                        }
+                    }
+                    break;
+                case 6:
+                    System.out.println("Enter the building id: ");
+                    int buildId = input.nextInt();
+                    if (buildId<0 || buildId>buildings.size()) {
+                        System.out.println("Invalid building id");
+                    }
+                    else {
+                        buildings.get(buildId).listTenants();
+                        System.out.println("Enter apartment number: ");
+                        int aptNum = input.nextInt();
+                        if (aptNum<0 || aptNum>buildings.get(buildId).apartments.length) {
+                            System.out.println("Invalid apartment number");
+                        }
+                        else {
+                            if (buildings.get(buildId).removeTenant(aptNum)){
+                                System.out.println("Tenant removed");
+                            }
+                            else{
+                                System.out.println("Tenant not removed");
+                            }
+                        }
+                    }
+                    break;
+                case 7:
+                    System.out.println("Enter the building id: ");
+                    int num=input.nextInt();
+                    if (num<0 ||num>buildings.size()) {
+                        System.out.println("Invalid building id");
+                    }
+                    else {
+                        buildings.get(num).listTenants();
+                        System.out.println("Enter apartment number: ");
+                        int aptNum = input.nextInt();
+                        if (buildings.get(num).getTenant(aptNum)==null){
+                            System.out.println("Tenant not found");
+                        }
+                        else {
+                            Tenant lilboy=buildings.get(num).getTenant(aptNum);
+                            System.out.println((lilboy.toString());
+                            System.out.println("Enter Tenants name: ");
+                            String name = input.nextLine();
+                            System.out.println("Enter Tenants age: ");
+                            int age = input.nextInt();
+                            System.out.println("Enter Tenants rent: ");
+                            int rent = input.nextInt();
+                            lilboy.name=name;
+                            lilboy.age=age;
+                            lilboy.rent=rent;
+                            buildings.get(num).apartments[aptNum]=lilboy;
+                        }
+                    }
+                    break;
+                case 8:
+                    System.out.println("Enter the building id: ");
+                    int num2 = input.nextInt();
+                    if (num2<0 || num2>buildings.size()) {
+                        System.out.println("Invalid building id");
+                    }
+                    else {
+                        buildings.get(num2).listTenants();
+
+                        System.out.println("Enter apartment number: ");
+                        int aptNum2 = input.nextInt();
+                        if (buildings.get(num2).getTenant(aptNum2)==null){
+                            System.out.println("Tenant not found");
+                        }
+                        else {
+                            System.out.println(buildings.get(num2).apartments[aptNum2].toString());
+                            Building.collectRent(buildings.get(num2).getTenant(aptNum2));
+                        }
+                    }
+                    break;
+                case 9:
+                    System.out.println(Building.getBalance());
+                    System.out.println("what is the amount for the service? ");
+                    int amount=input.nextInt();
+                    Building.payForService(amount)
+                    break;
+                default:
+                    //skibidi sigma
+                    break;
+            }
+        }while(choice!=0);
+
+    }
+}

@@ -1,0 +1,17 @@
+public class Tenant {
+    public String name;
+    public double rent;
+    public int age;
+
+   public  Tenant (String name, double rent, int age) {
+        this.name = name;
+        this.rent = rent;
+        this.age = age;
+    }
+//   public Tenant () {
+//
+//   }
+    public String toString() {
+       return "Name: " + name + ", Rent: " + rent + ", Age: " + age;
+    }
+}
